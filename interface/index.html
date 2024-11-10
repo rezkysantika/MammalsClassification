@@ -1,0 +1,222 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Mammals Classification</title>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet">
+  <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+
+  <style>
+    * {
+      box-sizing: border-box;
+      font-family: 'Poppins', sans-serif;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      background-color: #f7f3ee;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      min-height: 100vh;
+    }
+
+    .container {
+      max-width: 900px;
+      text-align: center;
+      padding: 20px;
+    }
+
+    h1 {
+      font-size: 2em;
+      font-weight: 600;
+    }
+
+    .upload-box {
+      border: 2px dashed #bbb;
+      padding: 20px;
+      margin: 20px 0;
+      border-radius: 10px;
+      cursor: pointer;
+    }
+
+    .upload-box p {
+      color: #666;
+      font-weight: 600;
+    }
+
+    .primary-result {
+      background-color: #f3e0d2;
+      padding: 10px;
+      border-radius: 8px;
+      text-align: left;
+      margin-bottom: 20px;
+    }
+
+    .result-image {
+      max-width: 177px;
+      border-radius: 5px;
+    }
+
+    .classes-list ul {
+      list-style: none;
+      padding-left: 0;
+    }
+
+    .classes-list li {
+      display: flex;
+      align-items: center;
+      background-color: #fff;
+      margin-bottom: 5px;
+      border-radius: 8px;
+    }
+
+    .classes-list img {
+      max-width: 50px;
+      margin-right: 10px;
+      /* border-radius: 5px; */
+      border-top-left-radius: 5px;
+      border-bottom-left-radius: 5px;;
+    }
+
+    .footer {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-top: 20px;
+    }
+
+    .group-info {
+      background-color: #c6e8dc;
+      padding: 10px;
+      border-radius: 8px;
+      font-size: 0.9em;
+    }
+
+    .button-container {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-top: 45px;
+    }
+
+    .classify-button, .group-info {
+      flex: 1;
+      margin: 0 5px;
+    }
+
+    .classify-button {
+      background-color: #d3aaf5;
+      border: none;
+      padding: 10px 20px;
+      color: white;
+      font-size: 1em;
+      border-radius: 8px;
+      cursor: pointer;
+    }
+
+    .fa-upload, .fa-redo {
+      margin-right: 8px;
+    }
+  </style>
+</head>
+<body>
+
+<div class="container">
+  <div class="row">
+    <div class="col-md-8">
+      <h1>Mammals Classification</h1>
+
+      <div class="upload-box" onclick="document.getElementById('file-input').click();">
+        <input type="file" id="file-input" style="display: none;" accept="image/*" onchange="previewImage(event)">
+        <p><i class="fas fa-upload"></i> Click to Upload Image</p>
+      </div>
+
+      <div class="row">
+        <div class="col-md-8">
+            <h2>Result</h2>
+            <div class="row primary-result">
+              <div id="primary-result" class="col-md-8">
+                <img id="result-image" width="177px" src="placeholder.jpg" alt="Result" class="result-image">
+                <p><strong id="result-text">Beruang (0.58)</strong></p>
+              </div>
+              <div class="col-md-4" id="other-results">
+                <p>Koala (0.2)</p>
+                <p>Jerapah (0.1)</p>
+                <p>Kuda (0.01)</p>
+                <p>Unta (0.001)</p>
+                <p>Zebra (0.0012)</p>
+              </div>
+            </div>
+
+        </div>
+        <div class="col-md-4">
+            <div class="button-container">
+              <div class="group-info">
+                <p>Group 9</p>
+                <p>Annafi Nur Jayani 5024211005</p>
+                <p>Rezky Dwisantika 5024221001</p>
+              </div>
+            </div>
+            <button class="classify-button" onclick="classifyImage()" style="margin-top: 20px;"> 
+              <i class="fas fa-redo"></i> Classify Again
+            </button>
+
+        </div>
+      </div>
+    </div>
+
+    <div class="col-md-4" style=" background-color: #e8dccd; border-radius: 10px; padding: 10px; margin-left: 0cm;">
+      <h4>Classes</h4>
+      <ul class="classes-list">
+        <li><img src="https://storage.googleapis.com/kagglesdsdata/datasets/3999173/6961629/mammals/brown_bear/brown_bear-0012.jpg?X-Goog-Algorithm=GOOG4-RSA-SHA256&X-Goog-Credential=databundle-worker-v2%40kaggle-161607.iam.gserviceaccount.com%2F20241108%2Fauto%2Fstorage%2Fgoog4_request&X-Goog-Date=20241108T063940Z&X-Goog-Expires=345600&X-Goog-SignedHeaders=host&X-Goog-Signature=674d4cf6db53842ad2bbce995c4bf6fe41c661e4fa8058a09418911cafe21cc07a720671497e431f9c6536b2faec75f993418d74b8289bc724202607e9897da4c2e6a5386d678fd8c9fc544b1bd1654df1a6a400aea8fcdc316c275c29dd367a1bc6d903c90eef0220d7c436cc3ae4a23be9a72664b0b1a8d8ce22ff1b3ac7f5f314d243c2c5cedf60acc7c0f48efeec460556631eb5ad6ff1e9ef3abd28ca116bc0c0e1264f67e9fa9a2cf10b8818c0c3d6a6bc668dbd238e6fd4f966941995581b9201b4bb64e2797cc3a042d7312ec7801232cefd87a7789fe8f59e411a56c175e10608d0fb99039b6c4a81b941ad443f069ca2d411ff3fc1dbb380f2a4cf" 
+            alt="Bear"> Bear</li>
+        <li><img src="https://storage.googleapis.com/kagglesdsdata/datasets/3999173/6961629/mammals/camel/camel-0007.jpg?X-Goog-Algorithm=GOOG4-RSA-SHA256&X-Goog-Credential=databundle-worker-v2%40kaggle-161607.iam.gserviceaccount.com%2F20241108%2Fauto%2Fstorage%2Fgoog4_request&X-Goog-Date=20241108T064020Z&X-Goog-Expires=345600&X-Goog-SignedHeaders=host&X-Goog-Signature=12854226d67cffef154175dc0e10d5c337072ac6e95314b05f607c5be3575c2c69d833104be93daebc327efdb7f9f0688a16852a5b4e3cf09073310d73143e57ce1ef4313a7b5a068b79752a3460e4582c29d928596557279fb09df72ecbdcfae2908c652fc750189f2adbdbef4b7e8ab735242b4f7086ef1d47b6e4bf9c678bfcae289173688f337be3ea5666c2e67e752ddcaf0acdbb0b7bab41494c2942d000d9f3b40a17ea3d0fb3678d6436e557d9edcc6eec4dbda2343745859a4ace82d2ee39e527072613ab1f2fa041f4c480cb632aeb370492b5d59c60a8e503783f6c606f00494090ef688eeddfe43c3d2cc1fff6d3367f7356c5b8f5649abd1bb2" 
+            alt="Camel"> Camel</li>
+        <li><img src="https://storage.googleapis.com/kagglesdsdata/datasets/3999173/6961629/mammals/giraffe/giraffe-0001.jpg?X-Goog-Algorithm=GOOG4-RSA-SHA256&X-Goog-Credential=databundle-worker-v2%40kaggle-161607.iam.gserviceaccount.com%2F20241108%2Fauto%2Fstorage%2Fgoog4_request&X-Goog-Date=20241108T064045Z&X-Goog-Expires=345600&X-Goog-SignedHeaders=host&X-Goog-Signature=6b1628ea2c0b9dbc48d590789c97fef768dbea5ec1e0cb8b3488d4ce2f586aded96473a386fb73e1ac825f0b129c43b121c7f9ffea815a732e796d3681239a3429a92d8d5dc1fa3b300e65c86bdd7ce69396803cee4e1d00f2c98ca8303a0f2183d6ff3465f87e1ee75edc86bfa5cb716f1137711fbe4ff69bb5d3f71ad3c4833a4678d91ce20e56f5fb14b93ff0f96b419902a89f6ed90e5a4df857b56d5fe100b185558082a98622a2792a22a8e25778506ec05001e1447c1c074b8a443ba7e798666bac5a1fd3f25aabd1623bb29d4b1836192691076f7dc73ba71abcc8e3720100a2c03df07e2e1532b4498fbee4bf3ccd61b026ca3f1f3b9f221657cefd" 
+            alt="Giraffe"> Giraffe</li>
+        <li><img src="https://storage.googleapis.com/kagglesdsdata/datasets/3999173/6961629/mammals/horse/horse-0006.jpg?X-Goog-Algorithm=GOOG4-RSA-SHA256&X-Goog-Credential=databundle-worker-v2%40kaggle-161607.iam.gserviceaccount.com%2F20241108%2Fauto%2Fstorage%2Fgoog4_request&X-Goog-Date=20241108T064059Z&X-Goog-Expires=345600&X-Goog-SignedHeaders=host&X-Goog-Signature=7a16ce24c8720f14966241a936cb0e493d13bd2b8e56fc211586156dbab25710729360e67e3f29382fe11438306f1193424fac12bc02dfb87dad987e4f61ce2462e4826d8dc62b11e8fbee42724892bc87f29f3d067ae3f9e223513f106625ae05dcee9f3a91748c06fa5c584cfd8b602c826e5db11193c46064963b0c4de9c8a8e267fea68cc0f6b659de4f989d9e7d850bcda1e8a94e7905ce1d31ac0dedfeb35bad20ca29ff610891c87f73f05285975b70b0dc957bd63ca6022557baba90b3bce885c14ed43965fcc135df8a8e78da4838e480c11fe3ad63a79ed15fa6a16c180a07943a8d94de197f697c40292c7cf6504ec10c093e24a5039c9d037d41" 
+            alt="Horse"> Horse</li>
+        <li><img src="https://storage.googleapis.com/kagglesdsdata/datasets/3999173/6961629/mammals/kangaroo/kangaroo-0003.jpg?X-Goog-Algorithm=GOOG4-RSA-SHA256&X-Goog-Credential=databundle-worker-v2%40kaggle-161607.iam.gserviceaccount.com%2F20241108%2Fauto%2Fstorage%2Fgoog4_request&X-Goog-Date=20241108T064118Z&X-Goog-Expires=345600&X-Goog-SignedHeaders=host&X-Goog-Signature=077f048d99efcaf67ab6a90e23db270077bac2c4d4148c0d34dec3db3bd16848a14f202b922c5d9238d78399d0d325cb1e6cb8c9313ff5574beb345f6f607520dab03335b04cd68813a8318f075afaef3e5ceb751893a23322126ef14edca514244e611ddd51504196b610090f34abef4e045eacfea345cdcf18016733ae33ec1394ff807e85b26df076b88e51496500c9fe12eb2763657cf92284d935d712dcd4537d69e539debbf47db21c38a05d934619e5bdd9d154e251f39498d3efd20e7f1cbcf1d70ce65e771434b4716a10ed3d142e8c2b44651f1bdf3d148891fb7c493339c5ee48a5bff5fdca5f60a40b412d0e0dbd35acc0750bceb96c9a1e22d8" 
+            alt="Kangaroo"> Kangaroo</li>
+        <li><img src="https://storage.googleapis.com/kagglesdsdata/datasets/3999173/6961629/mammals/koala/koala-0003.jpg?X-Goog-Algorithm=GOOG4-RSA-SHA256&X-Goog-Credential=databundle-worker-v2%40kaggle-161607.iam.gserviceaccount.com%2F20241108%2Fauto%2Fstorage%2Fgoog4_request&X-Goog-Date=20241108T124637Z&X-Goog-Expires=345600&X-Goog-SignedHeaders=host&X-Goog-Signature=5f3301dabba275734baae04ac056d55b4bd4f801d6e5f85637fd75bbbc39f06b4b16361464a39000c8a78393fc9982d4f423150cbe8de78439951391c9b4a4f4b8b2cce3b4b2f39b59829d36f592feebce3fa26c3be60184e883b9e1086fc57dfa9234c0492e00e1367867bedab7ee6f4543216e26dcba237335523c14abb6a47228d64a6cf424001a59d7f7f18d6370bb6fb0f5376e3d98470422243d75c03a3233f62927883d1b1a7d7849acc585c9e7fe732977a17d11de8c978e03f9c84729b11bccc708086e4f3ca886f1ff5ba7158b128793747041202b184c71c230f9fcc8a6ef505a83e27c2b9ddbd49662d1cade945abd43686218eb632830dde406" 
+            alt="Koala"> Koala</li>
+        <li><img src="https://storage.googleapis.com/kagglesdsdata/datasets/3999173/6961629/mammals/zebra/zebra-0009.jpg?X-Goog-Algorithm=GOOG4-RSA-SHA256&X-Goog-Credential=databundle-worker-v2%40kaggle-161607.iam.gserviceaccount.com%2F20241108%2Fauto%2Fstorage%2Fgoog4_request&X-Goog-Date=20241108T124700Z&X-Goog-Expires=345600&X-Goog-SignedHeaders=host&X-Goog-Signature=3bc74aa8cdee3a2a1396e529c42bf2ae8de6b0a0d372962e16afc33b46d22a8fb9f1e5c74ad2f1b8f2e35ce1d3cc78383b365f1524ec5eaf2b1b95cf36e285a5723d3eeda62ddd99b918de981a50f3de68f47e1acdbbc56903447e35e0c437d067a55366a9449c34fcbf1166942bb7432c1e2eff3508a75c31237637ce9af80ab0d358ea68f11748521c6df2da61e16595269c6aae824fddbc2bff55ab3ad0a228c5463addd2efd9cf121b67d5c49951a86c8e951779a6e7f694e0c6e16e3c2c2f0f4e2cef83f6a68210173d97bc980b67021d8ed5599c301af75df7b6fade961a76c56d91c6f09df5e91537ec12e17500d36c27c8681f96088d90199f6e37db" 
+            alt="Zebra"> Zebra</li>
+      </ul>
+    </div>
+  </div>
+</div>
+
+<script>
+  function previewImage(event) {
+    const reader = new FileReader();
+    reader.onload = function() {
+      const output = document.getElementById('result-image');
+      output.src = reader.result;
+    };
+    reader.readAsDataURL(event.target.files[0]);
+  }
+
+  function classifyImage() {
+    const resultText = document.getElementById('result-text');
+    resultText.innerText = "Beruang (0.58)";
+    
+    const otherResults = document.getElementById('other-results');
+    otherResults.innerHTML = `
+      <p>Koala (0.2)</p>
+      <p>Jerapah (0.1)</p>
+      <p>Kuda (0.01)</p>
+      <p>Unta (0.001)</p>
+      <p>Zebra (0.0012)</p>
+    `;
+    
+    alert("Image classified!");
+  }
+</script>
+
+</body>
+</html>
