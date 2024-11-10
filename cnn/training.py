@@ -31,13 +31,13 @@ if __name__ == "__main__":
     print("| Batch Size  :", batch_size)
     print("| Device      :", device)
 
-    logger = DataLogger("SimpleFlowersClassification")
+    logger = DataLogger("MammalsClassification")
     metrics = ModelTesterMetrics()
 
     metrics.loss = torch.nn.BCEWithLogitsLoss()
     metrics.activation = torch.nn.Softmax(1)
 
-    model = SimpleCNN(3).to(device)
+    model = SimpleCNN(7).to(device)
     optimizer = torch.optim.Adam(model.parameters(), lr=0.00001)
 
     training_augmentation = [
@@ -45,9 +45,10 @@ if __name__ == "__main__":
         transforms.RandomVerticalFlip(),
     ]
 
-    validation_dataset = SimpleTorchDataset('./cnn/dataset/val')
-    training_dataset = SimpleTorchDataset('./cnn/dataset/train', training_augmentation)
-    testing_dataset = SimpleTorchDataset('./cnn/dataset/test')
+    validation_dataset = SimpleTorchDataset('./dataset/val')
+    training_dataset = SimpleTorchDataset('./dataset/train')
+    # training_dataset = SimpleTorchDataset('./dataset/train', training_augmentation)
+    testing_dataset = SimpleTorchDataset('./dataset/test')
 
     validation_datasetloader = DataLoader(validation_dataset, batch_size=batch_size, shuffle=True)
     training_datasetloader = DataLoader(training_dataset, batch_size=batch_size, shuffle=True)

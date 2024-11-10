@@ -65,8 +65,8 @@ if __name__ == "__main__":
     metrics = ModelTesterMetrics()
     metrics.reset()
 
-    x = torch.rand(1, 3)
-    y = torch.rand(1, 3)
+    x = torch.rand(1, 7)
+    y = torch.rand(1, 7)
 
     ls = metrics.compute(x, y)
     print(ls)
