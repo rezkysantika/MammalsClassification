@@ -44,6 +44,8 @@ class ExtendedSimpleCNN2D(nn.Module):
             ConvPoolBlock(64,  128),
 
             ConvPoolBlock(128, 256),
+
+            ConvPoolBlock(256, 512), #add layer
         )
 
         self.neck = nn.AdaptiveAvgPool2d(1)
@@ -51,6 +53,7 @@ class ExtendedSimpleCNN2D(nn.Module):
         self.head = nn.Sequential(
             nn.Linear(256, 64),
             nn.LeakyReLU(),
+            nn.Dropout(0.5), #add drop out
             nn.Linear(64, output_classes)
         )
     

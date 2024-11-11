@@ -5,7 +5,7 @@ from sklearn.metrics import classification_report, confusion_matrix
 class ModelTesterMetrics():
     def __init__(self) -> None:
         self.loss       = torch.nn.L1Loss()
-        self.activation = torch.nn.Identity()
+        self.activation = torch.nn.Softmax(dim=1)
 
         self.loss_values     : list[float] = []
         self.accuracy_values : list[float] = [] 
@@ -59,6 +59,20 @@ class ModelTesterMetrics():
     def confusion(self) -> str:
         return str(confusion_matrix(self.y_truth, self.x_pred))
     
+    def evaluate(self, model, dataloader, device): #tambah fungsi evaluate
+        model.eval()
+        self.reset()
+        
+        with torch.no_grad():
+            for images, labels in dataloader:
+                images, labels = images.to(device), labels.to(device)
+                outputs = model(images)
+                self.compute(outputs, labels)
+        
+        avg_loss = self.average_loss()
+        avg_accuracy = self.average_accuracy()
+        return avg_loss, avg_accuracy
+
 if __name__ == "__main__":
     print("Tester !")
 

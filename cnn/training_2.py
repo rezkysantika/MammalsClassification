@@ -33,11 +33,11 @@ if __name__ == "__main__":
     logger  = DataLogger("MammalsClassification")
     metrics = ModelTesterMetrics()
 
-    metrics.loss       = torch.nn.BCEWithLogitsLoss()
-    metrics.activation = torch.nn.Softmax(1)
+    metrics.loss       = torch.nn.CrossEntropyLoss() #diganti ke CrossEntropyLoss
+    metrics.activation = torch.nn.Softmax(dim=1) #jadi dim=1
 
     model        = ExtendedSimpleCNN2D(3, 7).to(device)
-    optimizer    = torch.optim.Adam(model.parameters(), lr = 0.0001)
+    optimizer    = torch.optim.Adam(model.parameters(), lr = 0.00001, weight_decay=1e-4) #lr awal 0.0001, ditambah weight decay
 
     validation_dataset = SimpleTorchDataset('./dataset/val')
     training_dataset   = SimpleTorchDataset('./dataset/train')
@@ -68,8 +68,11 @@ if __name__ == "__main__":
         training_mean_accuracy = metrics.average_accuracy()
 
         # Evaluation Loop
-        model.eval()    # set the model to evaluation
-        metrics.reset() # reset the metrics
+        # model.eval()    # set the model to evaluation
+        # metrics.reset() # reset the metrics
+        
+        evaluation_mean_loss, evaluation_mean_accuracy = metrics.evaluate(model, validation_datasetloader, device)
+
 
         for (image, label) in tqdm(validation_datasetloader, desc = "Testing  :"):
             
@@ -117,8 +120,11 @@ if __name__ == "__main__":
     model = model.to(device)
     
     # Testing System 
-    model.eval()    # set the model to evaluation
-    metrics.reset() # reset the metrics
+    # model.eval()    # set the model to evaluation
+    # metrics.reset() # reset the metrics
+    
+    testing_mean_loss, testing_mean_accuracy = metrics.evaluate(model, testing_datasetloader, device)
+
 
     for (image, label) in tqdm(testing_datasetloader):
         
