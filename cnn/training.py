@@ -9,6 +9,7 @@ from torch.utils.data import DataLoader
 from helper_logger import DataLogger
 from model_base import SimpleCNN, BasicMobileNet
 from helper_tester import ModelTesterMetrics
+from model_scn2     import ExtendedSimpleCNN2D
 from dataset import SimpleTorchDataset
 from torchvision import transforms
 
