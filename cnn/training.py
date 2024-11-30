@@ -7,7 +7,7 @@ from tqdm import tqdm
 from torch.utils.data import DataLoader
 
 from helper_logger import DataLogger
-from model_base import SimpleCNN, BasicMobileNet
+from model_base import SimpleCNN
 from helper_tester import ModelTesterMetrics
 from model_scn2     import ExtendedSimpleCNN2D
 from dataset import SimpleTorchDataset
@@ -47,8 +47,7 @@ if __name__ == "__main__":
     ]
 
     validation_dataset = SimpleTorchDataset('./dataset/val')
-    training_dataset = SimpleTorchDataset('./dataset/train')
-    # training_dataset = SimpleTorchDataset('./dataset/train', training_augmentation)
+    training_dataset = SimpleTorchDataset('./dataset/train', training_augmentation)
     testing_dataset = SimpleTorchDataset('./dataset/test')
 
     validation_datasetloader = DataLoader(validation_dataset, batch_size=batch_size, shuffle=True)

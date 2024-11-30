@@ -77,22 +77,6 @@ class SimpleCNN(nn.Module):
         x = self.head(x)    # (N, 128)           => (N, output_class)
         return x
 
-class BasicMobileNet(nn.Module):
-    def __init__(self, output_classes : int) -> None:
-        super().__init__()
-
-        self.base = tv.models.mobilenet_v3_small(weights = tv.models.MobileNet_V3_Small_Weights.DEFAULT)
-        self.base.classifier = nn.Sequential(
-            nn.Linear(576, 128),
-            nn.LeakyReLU(),
-            nn.Dropout(0.25),
-            nn.Linear(128, output_classes)
-        )
-    
-    def forward(self, x : torch.Tensor) -> torch.Tensor:
-        x = self.base(x)
-        return x
-
 if __name__ == "__main__":
     print("Model Base Run")
 
